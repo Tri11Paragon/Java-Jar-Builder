@@ -2,6 +2,7 @@
 
 base_dir="/home/brett/Documents/Java/TotalCrafter"
 build_dir="$base_dir/builds/Builder"
+lib_dir="$base_dir/lib"
 
 build_name=""
 
@@ -44,7 +45,7 @@ if [ -n "$build_name" ]; then
 	mkdir all
 
 	#cp -R $base_dir/lib/used/ build/lib
-	cp -R $base_dir/lib/used/ lib/
+	cp -R $lib_dir lib/
 	cd lib
 
 	for filename in ./*.jar; do
