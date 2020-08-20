@@ -3,6 +3,7 @@
 base_dir="/home/brett/Documents/Java/TotalCrafter"
 build_dir="$base_dir/builds"
 lib_dir="$base_dir/lib/used"
+resource_dir="$base_dir/resources"
 main_class="com.brett.Main"
 
 build_name=""
@@ -44,6 +45,11 @@ if [ -n "$build_name" ]; then
 	mkdir windows_x64
 	mkdir macos
 	mkdir all
+	mkdir source
+	
+	cp -R $base_dir/src source/src
+	cp -R $lib_dir source/lib
+	cp -R $resource_dir source/resources/
 
 	#cp -R $base_dir/lib/used/ build/lib
 	cp -R $lib_dir lib/
@@ -148,13 +154,13 @@ if [ -n "$build_name" ]; then
     
     pwd
     
-	cp -R $base_dir/resources/ all/resources/
-	cp -R $base_dir/resources/ linux_x64/resources/
-	cp -R $base_dir/resources/ linux_arm32/resources/
-	cp -R $base_dir/resources/ linux_arm64/resources/
-	cp -R $base_dir/resources/ macos/resources/
-	cp -R $base_dir/resources/ windows_x64/resources/
-	cp -R $base_dir/resources/ windows_x86/resources/
+	cp -R $resource_dir all/resources/
+	cp -R $resource_dir linux_x64/resources/
+	cp -R $resource_dir linux_arm32/resources/
+	cp -R $resource_dir linux_arm64/resources/
+	cp -R $resource_dir macos/resources/
+	cp -R $resource_dir windows_x64/resources/
+	cp -R $resource_dir windows_x86/resources/
 
 	zip -vr -9 all.zip all/
 	zip -vr -9 linux_x64.zip linux_x64/
@@ -163,6 +169,7 @@ if [ -n "$build_name" ]; then
 	zip -vr -9 macos.zip macos/
 	zip -vr -9 windows_x64.zip windows_x64/
 	zip -vr -9 windows_x86.zip windows_x86/
+	zip -vr -9 source.zip source/
 
 	rm -fr cjava
 	rm -fr lib
