@@ -1,8 +1,9 @@
 #!/bin/bash
 
 base_dir="/home/brett/Documents/Java/TotalCrafter"
-build_dir="$base_dir/builds/Builder"
-lib_dir="$base_dir/lib"
+build_dir="$base_dir/builds"
+lib_dir="$base_dir/lib/used"
+main_class="com.brett.Main"
 
 build_name=""
 
@@ -19,7 +20,7 @@ fi
 
 function buildjar {
 	cd cjava
-	echo -e "Manifest-Version: 1.0 \nMain-Class: com.brett.Main" > MANIFEST.MF
+	echo -e "Manifest-Version: 1.0 \nMain-Class: $main_class" > MANIFEST.MF
 	jar -cfv0m $build_name.jar MANIFEST.MF *
 	mv $build_name.jar ../$build_name.jar
 	cd ..
@@ -68,7 +69,7 @@ if [ -n "$build_name" ]; then
 
 	#build for all
 	buildjar
-	mv $build_name.jar all/totalcrafter.jar
+	mv $build_name.jar all/${build_name}.jar
 
 	#build for linux64
 	rm -fr cjava/macos
@@ -77,7 +78,7 @@ if [ -n "$build_name" ]; then
 	rm -fr cjava/linux/arm64
 
 	buildjar
-	mv $build_name.jar linux_x64/totalcrafter_linux.jar
+	mv $build_name.jar linux_x64/${build_name}_linux.jar
 	cp -R lib/* cjava/
 
 	#build for linux arm32
@@ -87,7 +88,7 @@ if [ -n "$build_name" ]; then
 	rm -fr cjava/linux/arm64
 
 	buildjar
-	mv $build_name.jar linux_arm32/totalcrafter_linux.jar
+	mv $build_name.jar linux_arm32/${build_name}_linux.jar
 	cp -R lib/* cjava/
 
 	#build for linux arm64
@@ -97,7 +98,7 @@ if [ -n "$build_name" ]; then
 	rm -fr cjava/linux/arm32
 
 	buildjar
-	mv $build_name.jar linux_arm64/totalcrafter_linux.jar
+	mv $build_name.jar linux_arm64/${build_name}_linux.jar
 	cp -R lib/* cjava/
 
 	#build for windows x86
@@ -106,7 +107,7 @@ if [ -n "$build_name" ]; then
 	rm -fr cjava/windows/x64
 
 	buildjar
-	mv $build_name.jar windows_x86/totalcrafter_windows.jar
+	mv $build_name.jar windows_x86/${build_name}_windows.jar
 	cp -R lib/* cjava/
 
 	#build for windows x64
@@ -115,7 +116,7 @@ if [ -n "$build_name" ]; then
 	rm -fr cjava/windows/x86
 
 	buildjar
-	mv $build_name.jar windows_x64/totalcrafter_windows.jar
+	mv $build_name.jar windows_x64/${build_name}_windows.jar
 	cp -R lib/* cjava/
 
 	#build for macos
@@ -123,24 +124,30 @@ if [ -n "$build_name" ]; then
 	rm -fr cjava/windows
 
 	buildjar
-	mv $build_name.jar macos/totalcrafter_macos.jar
+	mv $build_name.jar macos/${build_name}_macos.jar
 	cp -R lib/* cjava/
-
+	
+	pwd
+	
 	cd linux_x64
-	echo "java -jar totalcrafter_linux.jar" > run.sh
+	echo "java -jar ${build_name}_linux.jar" > run.sh
 	chmod +x run.sh
 	cd $build_dir/build-$build_name
-
+    
+    pwd
+    
 	cd linux_arm32
-	echo "java -jar totalcrafter_linux.jar" > run.sh
+	echo "java -jar ${build_name}_linux.jar" > run.sh
 	chmod +x run.sh
 	cd $build_dir/build-$build_name
 
 	cd linux_arm64
-	echo "java -jar totalcrafter_linux.jar" > run.sh
+	echo "java -jar ${build_name}_linux.jar" > run.sh
 	chmod +x run.sh
 	cd $build_dir/build-$build_name
-
+    
+    pwd
+    
 	cp -R $base_dir/resources/ all/resources/
 	cp -R $base_dir/resources/ linux_x64/resources/
 	cp -R $base_dir/resources/ linux_arm32/resources/
